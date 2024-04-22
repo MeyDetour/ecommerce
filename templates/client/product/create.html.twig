@@ -1,0 +1,14 @@
+{% extends './client/base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+
+{% block body %}
+    <h1>Nouveau produt</h1>
+    <div class="example-wrapper">
+        {{ form_start(formProd) }}
+        {{ form_row(formProd.name) }}
+        <button type="submit" class="btn btn-primary">creer</button>
+        {{ form_end(formProd) }}
+    </div>
+{% endblock %}
