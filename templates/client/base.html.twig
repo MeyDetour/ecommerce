@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Sirius!{% endblock %}</title>
-        <link rel="icon" href="{{ asset('images/icon.webp') }}">
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('styles') }}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Sirius!{% endblock %}</title>
+    <link rel="icon" href="{{ asset('images/icon.webp') }}">
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('styles') }}
 
-            <link rel="stylesheet" href="{{ asset('styles/form.css') }}">
-        {% endblock %}
+        <link rel="stylesheet" href="{{ asset('styles/form.css') }}">
+    {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('entryName') }}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-    {% include 'component/navbar.html.twig' %}
-    <div class="container">
+    {% block javascripts %}
+        {{ encore_entry_script_tags('entryName') }}
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+    {% endblock %}
+</head>
+<body>
+{% include 'component/navbar.html.twig' %}
+<div class="container" {{ stimulus_controller('cart') }}>
 
-        {% block body %}{% endblock %}
-    </div>
-    </body>
+    {% block body %}{% endblock %}
+</div>
+</body>
 </html>

@@ -2,14 +2,13 @@
 
     {% if app.user %}
         {% if "ROLE_ADMIN" in app.user.roles %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('new_category') }}">new Category</a>
-            </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('app_category') }}">Categories</a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('new_product_admin') }}">new Product</a>
+                <a class="nav-link" href="{{ path('app_product_admin') }}">Produits</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('app_user') }}">utilisateurs</a>
@@ -18,11 +17,18 @@
                 <a class="nav-link" href="{{ path('app_statistique') }}">statistiques</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                <a class="nav-link" href="{{ path('app_statistique') }}">Paiement</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_statistique') }}">Livraison</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('app_home') }}">Retour au site</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+            </li>
+
         {% endif %}
     {% endif %}
 </ul>

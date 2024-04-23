@@ -3,11 +3,11 @@
 {% block title %}Tous les produits !{% endblock %}
 
 {% block body %}
-<div>
-    {% for cat in categories %}
-        <a href="{{ path('find_by_categorie',{'categoryName':cat.name}) }}">{{ cat.name }}</a>
-    {% endfor %}
-</div>
+
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('new_product_admin') }}">new Product</a>
+    </li>
     <table class="table">
         <thead>
         <tr>
@@ -17,7 +17,6 @@
             <th scope="col">description</th>
             <th scope="col">price</th>
             <th scope="col">image</th>
-            <th scope="col">action</th>
         </tr>
         </thead>
         <tbody>

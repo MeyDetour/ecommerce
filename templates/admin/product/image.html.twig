@@ -3,8 +3,14 @@
 
 
 {% block body %}
-    {% for image in images %}
-        <img src="{{ vich_uploader_asset(image) }}" alt="">
+
+    {% for image in prod.images %}
+        {% include '/component/image.html.twig' with  {
+            'route_name':'delete_image',
+            'imgClass':'imageAdded',
+            'image':image,
+            'param':{'id':image.id},
+            'aClass':''} %}
     {% endfor %}
     <h1>Nouveau produt</h1>
     <div class="example-wrapper">
