@@ -1,0 +1,48 @@
+{% extends './admin/base.html.twig' %}
+
+{% block title %}Tous les produits !{% endblock %}
+
+{% block body %}
+<div>
+    {% for cat in categories %}
+        <a href="{{ path('find_by_categorie',{'categoryName':cat.name}) }}">{{ cat.name }}</a>
+    {% endfor %}
+</div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">id</th>
+            <th scope="col">name</th>
+            <th scope="col">description</th>
+            <th scope="col">price</th>
+            <th scope="col">image</th>
+            <th scope="col">action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for prod  in products %}
+
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ prod.id }}</td>
+                <td><a href="{{ path('show_product',{'id':prod.id}) }}">{{ prod.name }}</a></td>
+                <td>{{ prod.description }}</td>
+                <td>{{ prod.price }}€</td>
+                <td>
+                    {% for image in prod.images %}
+                        <img src="{{ vich_uploader_asset(image) }}" alt="">
+                    {% endfor %}
+                </td>
+
+                <td>
+
+                    <a href="{{ path('del_product_admin',{'id':prod.id}) }}">Delete</a>
+                    <a href="{{ path('edit_product_admin',{'id':prod.id}) }}">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

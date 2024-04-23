@@ -1,0 +1,17 @@
+{% extends './admin/base.html.twig' %}
+{% block title %}Ajoutez une image{% endblock %}
+
+
+{% block body %}
+    {% for image in images %}
+        <img src="{{ vich_uploader_asset(image) }}" alt="">
+    {% endfor %}
+    <h1>Nouveau produt</h1>
+    <div class="example-wrapper">
+        {{ form_start(formImage) }}
+        {{ form_row(formImage.imageFile,{'attr':{'data-controller':'mydropzone'}}) }}
+        <button type="submit" class="btn btn-primary">creer</button>
+        <a href="{{ path('app_product_admin') }}">Voir les produits</a>
+        {{ form_end(formImage) }}
+    </div>
+{% endblock %}

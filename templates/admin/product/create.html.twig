@@ -1,6 +1,5 @@
-{% extends './client/base.html.twig' %}
-
-{% block title %}Hello HomeController!{% endblock %}
+{% extends './admin/base.html.twig' %}
+{% block title %}Nouveau produit{% endblock %}
 
 
 {% block body %}
@@ -8,6 +7,8 @@
     <div class="example-wrapper">
         {{ form_start(formProd) }}
         {{ form_row(formProd.name) }}
+        {{ form_row(formProd.description) }}
+        {{ form_row(formProd.price) }}
         <button type="submit" class="btn btn-primary">creer</button>
         {{ form_end(formProd) }}
     </div>

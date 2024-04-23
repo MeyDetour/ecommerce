@@ -1,8 +1,8 @@
 {% extends './client/base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}{{prod.name}}{% endblock %}
 
 {% block body %}
-
-     {{ product.name }}
+     {{ prod.id }}
+     {{ prod.name }}
 {% endblock %}

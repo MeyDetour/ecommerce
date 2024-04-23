@@ -5,22 +5,7 @@
     <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="{{ path('about_us') }}">About</a>
     </li>
-    {% if app.user %}
-        {% if "ROLE_ADMIN" in app.user.roles %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('new_category') }}">new Category</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_category') }}">Categories</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('new_product') }}">new Product</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_user') }}">utilisateurs</a>
-            </li>
-        {% endif %}
-    {% endif %}
+
 
     <li class="nav-item">
         <a class="nav-link" href="{{ path('app_product') }}">Prodcuts</a>
@@ -42,4 +27,11 @@
     {% endif %}
 
 
+    {% if app.user %}
+        {% if "ROLE_ADMIN" in app.user.roles %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_statistique') }}">ADMIN</a>
+            </li>
+            {% endif %}
+    {% endif %}
 </ul>
