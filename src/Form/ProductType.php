@@ -35,7 +35,8 @@ class ProductType extends AbstractType
                 'label'=>'Décrivez précisement votre produit'
             ])
             ->add('quantity',IntegerType::class,[
-                'label'=>'Quantité'
+                'label'=>'Quantité',
+                'data'=>0
             ])
             ->add('price',MoneyType::class,[
                 'label'=>'Prix'
