@@ -1,5 +1,5 @@
 .homePAge{
-    background: url("/staticImage/siriusBackground.png");
+    background: url("/assets/staticImage/siriusBackground.png");
     background-size: cover;
     background-position: center;
     width: 100vw;
@@ -28,7 +28,7 @@
 
 #saraLeone{
     position: relative;
-    background: url("/staticImage/aboutUS/saraLeone.webp");
+    background: url("/assets/staticImage/aboutUS/saraLeone.webp");
     background-size: cover;
     background-position: center;
     width: 34vw;
@@ -42,7 +42,7 @@
 }
 #zyanBran{
     position: relative;
-    background: url("/staticImage/aboutUS/zyanBran.webp");
+    background: url("/assets/staticImage/aboutUS/zyanBran.webp");
     background-size: cover;
     background-position: center;
     width: 34vw;
