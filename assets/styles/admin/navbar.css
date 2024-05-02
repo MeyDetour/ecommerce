@@ -1,0 +1,35 @@
+.adminHeaderNavbar span{
+    color: #FFF;
+    text-align: center;
+    font-family: Montserrat, sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+.adminNavbarSeparator{
+    border: white 1px solid;
+    width: 70%;
+    opacity: 100%;
+}
+.adminNavbarOption{
+padding: 0;
+
+}
+
+.adminNavbarOption .nav-item .nav-link{
+    color: #B5B4B4 !important;
+    font-family: Montserrat, sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}
+.navbarAdmin .backToWebsite{
+    color: #FFD500 !important;
+    font-family: Montserrat, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+}

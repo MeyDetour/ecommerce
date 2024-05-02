@@ -1,39 +1,55 @@
-<ul class="nav">
-    <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Home</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="{{ path('about_us') }}">A propos</a>
-    </li>
+{% set currentPath = path(app.request.attributes.get('_route'),
+    app.request.attributes.get('_route_params')) %}
+
+<nav class="navbar navbar-expand-lg
+{{ currentPath== '/product/'  ?' position-absolute no-bg ': 'dash-bg' }}
+
+min-vw-100 navbarClient  shadow-lg">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link grey-tx " aria-current="page" href="{{ path('app_home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link grey-tx " aria-current="page" href="{{ path('about_us') }}">A propos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link grey-tx" aria-current="page" href="{{ path('app_product') }}">Produits</a>
+                </li>
 
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{ path('app_product') }}">Produits</a>
-    </li>
 
+            </ul>
+            <ul class="d-flex navbar-nav ">
+                {% if app.user %}
+                <li class="nav-item">
+                    <a class="nav-link grey-tx"  aria-current="page"  href="{{ path('app_profil') }}">Profil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link grey-tx"  aria-current="page"  href="{{ path('app_cart') }}">Panier({{ cartService.countProduct() }})</a>
+                </li>
+                    {% else %}
 
-    {% if app.user %}
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path('app_profil') }}">Profil</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path('app_cart') }}">Panier</a>
-        </li>
-    {% else %}
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path('app_register') }}">s'enregistrer</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ path('app_login') }}">se connecter</a>
-        </li>
-    {% endif %}
-
-
-    {% if app.user %}
-        {% if "ROLE_ADMIN" in app.user.roles %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_statistique') }}">ADMIN</a>
-            </li>
-            {% endif %}
-    {% endif %}
-</ul>
+                        <li class="nav-item">
+                            <a class="nav-link grey-tx" aria-current="page" href="{{ path('app_register') }}">s'enregistrer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link grey-tx" aria-current="page" href="{{ path('app_login') }}">se connecter</a>
+                        </li>
+                {% endif %}
+                {% if app.user %}
+                    {% if "ROLE_ADMIN" in app.user.roles %}
+                        <li class="nav-item">
+                            <a class="nav-link grey-tx" href="{{ path('app_statistique_admin') }}">Admin</a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

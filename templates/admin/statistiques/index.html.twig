@@ -3,5 +3,95 @@
 
 
 {% block body %}
+    <div {{ stimulus_controller('section') }}>
+        <div class="d-flex flex-row gap-3 mb-5 pb-5 border-bottom ">
+
+            <button class="btn-category" {{ stimulus_action('section','section1','click') }}>Statistiques
+            </button>
+            <button class="btn-category" {{ stimulus_action('section','section2','click')|stimulus_action('section','allOption','click') }}>Actions
+            </button>
+
+        </div>
+        <div class=" flex-column" {{ stimulus_target('section','section1') }}>
+
+            <h4>Vetement du plus au moins populaire : </h4>
+            {% for elt in classement %}
+                {% if loop.index <= 5 %}
+                    <div class=" my-5   cart px-3">
+                        <div class="d-flex flex-row justify-content-between border-bottom">
+                            <label class="title">{{ elt.name }}</label>
+                            <label class="title">n°{{ loop.index }}</label>
+
+                        </div>
+
+                        <div class="products">
+                            <div class="product">
+                                <a href="{{ path('show_product',{'id':elt.id}) }}" class="w-75 d-flex flex-row">
+                                    {% if elt.images[0] is defined %}
+
+                                        <img src="{{ vich_uploader_asset(elt.images[0])|imagine_filter('product_index') }}"
+                                             class="card-img-top w-25" alt="...">
+                                    {% else %}
+                                        <img src="{{ asset('images/defaultImageClothe.png')|imagine_filter('product_index') }}"
+                                             class="card-img-top w-25" alt="...">
+                                    {% endif %}
+                                    <div class="w-75 p-3">
+                                        <p>{{ elt.description }}</p>
+
+                                    </div>
+                                </a>
+
+                                <div class=" w-25  d-flex flex-column align-items-end">
+
+                                    <label class="price small">{{ elt.price }}€</label>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div {{ stimulus_target('section','section2') }} class=" flex-column">
+            <div class="w-100 d-flex flex-row justify-content-end mb-5">
+                <div class="radio-inputs">
+                    <label class="radio">
+                        <input type="radio" name="radio" checked="">
+                        <span {{ stimulus_action('section','allOption','click')}} class="name">Tout</span>
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="radio">
+                        <span {{ stimulus_action('section','option1','click')}} class="name">Commentaires</span>
+                    </label>
+
+                    <label class="radio">
+                        <input type="radio" name="radio">
+                        <span {{ stimulus_action('section','option2','click')}} class="name">Commandes</span>
+                    </label>
+                </div>
+            </div>
+
+            {% for action in actions %}
+                <div class="border border-dark rounded-2 p-3 my-2 w-100 flex-row justify-content-between"
+                        {% if action.comment %} {{ stimulus_target('section','option1') }} {% endif %}
+                        {% if action.command %}{{ stimulus_target('section','option2') }} {% endif %}
+                >
+                    {% if action.comment %}
+                        <span >{{ action.author.firstName }} {{ action.author.lastName }} a posté un avis sur le produit {{ action.comment.product.name }}</span>
+                        <a class="text-decoration-underline"
+                           href="{{ path('show_user_admin',{'id':action.author.id}) }}">Voir le commentaire</a>
+
+                    {% endif %}
+                    {% if action.command %}
+                        <span  >{{ action.author.firstName }} {{ action.author.lastName }} a passé une commande ! Ref : {{ action.command.number }} ,
+                    </span>    <a class="text-decoration-underline"
+                                  href="{{ path('show_order_admin',{'id':action.command.id}) }}">Voir la commande</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 
 {% endblock %}

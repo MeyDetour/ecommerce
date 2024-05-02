@@ -1,9 +1,16 @@
 {% extends './admin/base.html.twig' %}
 {% block title %}Utilisateurs{% endblock %}
 {% block body %}
-    {% for user in users %}
-        <div class="card">
-            {{ user.email}}
-        </div>
-    {% endfor %}
+    {% set genre = {'F': 'Femme', 'H': 'Homme'} %}
+
+    <div class="d-flex flex-row flex-wrap mt-5">
+        {% for user in users %}
+            <a href="{{ path('show_user_admin',{'id':user.id}) }}" class="card p-2  py-4 w-25">
+                <h4 class="black-title"> {{ user.firstName }} {{ user.lastName }}
+                    : {{ genre[user.genre]|default('Autre') }}</h4>
+                <span class="fs-6">  {{ user.email }}</span>
+            </a>
+        {% endfor %}
+    </div>
+
 {% endblock %}

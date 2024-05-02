@@ -1,0 +1,7 @@
+{% set currentPath = path(app.request.attributes.get('_route'),app.request.attributes.get('_route_params')) %}
+<div class="d-flex flex-row gap-3 mb-5 pb-5 border-bottom ">
+
+    <button class="btn-category">   <a class="nav-link" href="{{ path('new_product_admin') }}">new Product</a>
+        </button>
+
+</div>

@@ -4,6 +4,120 @@
 {% block title %}Votre profil{% endblock %}
 
 {% block body %}
- {{ app.user.email }}
-<h1>cart</h1>
+    <div class="d-flex flex-row justify-content-between">
+        <div class="dash-bg  w-25 ">
+            {% include './component/navbarProfil.html.twig' %}
+        </div>
+        <div class="w-75 p-5 d-flex flex-column">
+
+            <h4>Votre panier</h4>
+
+
+            <div class="w-100 d-flex flex-row align-items-start justify-content-between">
+
+                <div class="w-75 pe-5  master-container d-flex flex-column  ">
+                    {% for item in cart %}
+
+                        <div class="  cardProduit cart px-3">
+                            <div class="d-flex flex-row justify-content-between border-bottom">
+                                <label class="title">{{ item.product.name }}</label>
+                                <label class="title"><a
+                                            href="{{ path('remove_product_to_cart',{'id':item.product.id }) }}">Enlever
+                                        le produit</a></label>
+
+                            </div>
+
+                            <div class="products">
+                                <div class="product">
+                                    <a href="{{ path('show_product',{'id':item.product.id}) }}" class="w-75 d-flex flex-row">
+                                        {% if item.product.images[0] is defined %}
+
+                                            <img src="{{ vich_uploader_asset(item.product.images[0])|imagine_filter('product_index') }}"
+                                                 class="card-img-top w-25" alt="...">
+                                        {% else %}
+                                            <img src="{{ asset('images/defaultImageClothe.png')|imagine_filter('product_index') }}"
+                                                 class="card-img-top w-25" alt="...">
+                                        {% endif %}
+                                        <div class="w-75 p-3">
+                                            <p>{{ item.product.description }}</p>
+
+                                        </div>
+                                    </a>
+
+                                    <div class=" w-25  d-flex flex-column align-items-end">
+
+                                        <label class="price small">{{ item.product.price }}€</label>
+                                        {% if item.product.quantity == 0 %}
+                                            <span style="color: red;">
+                                                        Produit en rupture de stock
+                                            </span>
+                                        {% else %}
+                                            {% if item.quantity > item.product.quantity %}
+                                                <span style="color: red; " class="fs-5">
+                                                        Il n'en reste que {{ item.product.quantity }}                                                 </span>
+                                            {% endif %}
+                                                <div class="quantity">
+                                                    <button class="btn"><a class=""
+                                                                           href="{{ path('remove_one_to_cart_from_cart',{'id':item.product.id}) }}">-</a>
+                                                    </button>
+                                                    <span>Quantité : {{ item.quantity }}</span>
+                                                    {% if item.quantity < item.product.quantity %}
+                                                        <button class="btn"><a class=""
+                                                                               href="{{ path('add_to_cart',{'id':item.product.id,'quantity':1}) }}">+</a>
+                                                        </button>
+                                                    {% endif %}
+                                                </div>
+
+
+                                        {% endif %}
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                </div>
+                <div class="w-25 ">
+                    <div class="  checkout">
+                        <label class="title">Checkout</label>
+                        <div class="details">
+                            {% for item in cart %}
+                                <span>{{ item.product.name }}  :</span>
+                                <span>{{ item.product.price * item.quantity }}€</span>
+                            {% endfor %}
+                        </div>
+                        <div class="checkout--footer">
+                            <label class="price"> {{ cartService.countPrice }} €</label>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-row justify-content-between align-items-start mt-3">
+
+                        <button class=" btn-category "><a href="{{ path('empty_cart') }}" class="">Vider</a></button>
+
+                        <button class="btn-category "><a href="{{ path('order_adresse_payement') }}"
+                                                         class=" ">Valider</a></button>
+
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
 {% endblock %}
+
+
+{#- - enlever la route
+
+
+-- cart count  #}

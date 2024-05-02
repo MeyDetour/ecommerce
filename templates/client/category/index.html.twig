@@ -1,0 +1,36 @@
+{% extends './client/base.html.twig' %}
+{% block title %}{{ name }}{% endblock %}
+
+
+{% block body %}
+<div class="container pt-5">
+    <h1 class="my-5 black-title fs-1">{{ name }}</h1>
+    <div class="mt-5 pt-5 d-flex flex-row flex-wrap">
+        {% for prod  in products %}
+            {% if loop.index <= 4 %}
+                <div class="mb-5">
+                    <a class="card cardBootstrap me-3 mb-3 d-flex flex-column" href="{{ path('show_product',{'id':prod.id}) }}"
+                    >
+                        {% if prod.images[0] is defined %}
+
+                            <img src="{{ vich_uploader_asset(prod.images[0])|imagine_filter('product_index') }}"
+                                 class="card-img-top" alt="...">
+                        {% else %}
+                            <img src="{{ asset('images/defaultImageClothe.png') }}" class="card-img-top" alt="...">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="black-title fs-5 ">{{ prod.name }}</h5>
+
+                        </div>
+                    </a>
+    </div>
+            {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+
+</div>
+
+{% endblock %}

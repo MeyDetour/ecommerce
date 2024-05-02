@@ -1,0 +1,51 @@
+{% extends './client/base.html.twig' %}
+
+
+{% block title %}Votre profil{% endblock %}
+
+{% block body %}
+
+
+    <div class="d-flex flex-row justify-content-between">
+        <div class="dash-bg  w-25 ">
+            {% include './component/navbarProfil.html.twig' %}
+        </div>
+        <div class="w-75 p-5 d-flex flex-column" {{ stimulus_controller('change') }}>
+            {{ form_start(form,{'attr':{'action':path('app_profil')}}) }}
+            <div class="d-flex flex-row justify-content-around">
+                <div class="d-flex flex-column w-50 px-3 ">
+                    {{ form_row(form.firstName,{'attr':{'data-action':'click->change#renderBtn'}}) }}
+                    {{ form_row(form.lastName,{'attr':{'data-action':'click->change#renderBtn'}}) }}
+                </div>
+                <div class="d-flex flex-column w-50 px-3">
+
+                    {{ form_row(form.genre,{'attr':{'data-action':'click->change#renderBtn'}}) }}
+                    {{ form_row(form._token) }}
+                </div>
+            </div>
+            <button {{ stimulus_target('change','btn')}} class="btn btn-lg btn-primary" type="submit">
+                Modifier
+            </button>
+            {{ form_end(form,{'render_rest':false}) }}
+        </div>
+
+    </div>
+
+
+
+
+    {#
+    TEMPLATE PROFIL PAGE
+
+       <div class="d-flex flex-row justify-content-between">
+        <div class="dash-bg  w-25 ">
+            {% include './component/navbarProfil.html.twig' %}
+        </div>
+        <div class="w-75 p-5 d-flex flex-column">
+            <div>
+
+           </div>
+        </div>
+
+    </div> #}
+{% endblock %}

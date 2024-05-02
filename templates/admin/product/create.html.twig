@@ -3,13 +3,24 @@
 
 
 {% block body %}
-    <h1>Nouveau produt</h1>
+    <a href="{{ path('app_product_admin') }}"><i class="bi bi-arrow-left me-2"></i> Retour</a>
+<div class="d-flex flex-row mt-5 py-5   border-top  ">
+<h4 class="black-title ">Nouveau produit</h4>
+</div>
     <div class="example-wrapper">
         {{ form_start(formProd) }}
         {{ form_row(formProd.name) }}
         {{ form_row(formProd.description) }}
+        {{ form_row(formProd.longDescription) }}
+        {{ form_row(formProd.quantity) }}
         {{ form_row(formProd.price) }}
-        <button type="submit" class="btn btn-primary">creer</button>
+        {{ form_row(formProd.visibility) }}
+        {{ form_row(formProd.categories) }}
+        {% if prod is defined %}   <a class="btn-category" href="{{ path('del_product_admin',{'id':prod.id}) }}">Supprimer</a>
+
+        {% endif %}
+      <button type="submit" class="btn-category">{{ prod is defined ? 'Modifier' : 'Creer'}} </button>
         {{ form_end(formProd) }}
     </div>
+
 {% endblock %}

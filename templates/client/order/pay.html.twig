@@ -1,0 +1,41 @@
+{% extends './client/base.html.twig' %}
+{% set currentPath = path(app.request.attributes.get('_route'),
+    app.request.attributes.get('_route_params')) %}
+
+{% set statut= ['En attente du paiement','En attente de la livraison','En cour de livraison','Livré','Problème lors de la livraison'] %}
+{% set statutPaiement = ['En attente du paiement','Payé'] %}
+{% block title %}Votre profil{% endblock %}
+
+{% block body %}
+  <div class="container py-5">
+    <div class="d-flex flex-row justify-content-between mt-2 mb-5">
+        {% if currentPath starts with '/order/profil' %}
+      <a href="{{ path('profile_orders_show',{'id':order.id}) }}" class="btn-category">Annuler</a>{% else %}
+      <a href="{{ path('show_order',{'id':order.id}) }}" class="btn-category">Annuler</a>{% endif %}
+      <a href="{{ path('payement_is_valid',{'id':order.id}) }}" class="btn-category">c'est bon j'ai payer</a>
+
+    </div>
+<h4>Vous allez payer : </h4>
+<div class="d-flex flex-row w-100 justify-content-between">
+    <div class="d-flex flex-column">
+        <span>Date de la commande : {{ order.createdAt|date('d-m-Y') }}</span>
+        <span>Status du paiement : {{ statutPaiement[order.payStatus] }}</span>
+        <span>Client : {{ order.author.entireIdentity}} </span>
+        <span>Adresse de facturation {{ order.billingAddresse.entireName }}  {{ order.billingAddresse.entireIdentity }}</span>
+        <span>Adresse de livraison : {{ order.adresse.entireName }}  {{ order.adresse.entireIdentity }}</span>
+        <span>Commande Ref : {{ order.number }}</span>
+
+    </div>
+    <div class="d-flex flex-column align-items-end">
+        <span> Nombre de produit : {{ order.items|length }}</span>
+        <span>Total : {{ order.total }}€</span>
+        Payer {{ order.total}}€ et valider la carte avec {{ order.payment.cardNumber }}
+
+    </div>
+
+
+</div>
+
+  </div>
+
+  {% endblock %}

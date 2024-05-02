@@ -1,0 +1,54 @@
+{% extends './client/base.html.twig' %}
+
+
+{% block title %}Votre profil{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex flex-row justify-content-between">
+        <div class="dash-bg  w-25 ">
+            {% include './component/navbarProfil.html.twig' %}
+        </div>
+        <div class="w-75 p-5 d-flex flex-column">
+
+            {% if app.user.likes is not empty %}
+                <h4> Votre liste d'envie</h4>
+                <div class="d-flex flex-row flex-wrap gap-5">
+
+                    {% for like in app.user.likes %}
+                        {% if like.product is defined %}
+
+                                <a href="{{ path('show_product',{'id':like.product.id}) }}" class="  d-flex flex-column ">
+                                    {% if like.product.images[0] is defined %}
+
+                                        <img src="{{ vich_uploader_asset(like.product.images[0])|imagine_filter('product_index') }}"
+                                             class="card-img-top w-100" alt="...">
+                                    {% else %}
+                                        <img src="{{ asset('images/defaultImageClothe.png')|imagine_filter('product_index') }}"
+                                             class="card-img-top w-100" alt="...">
+                                    {% endif %}
+                                    <div class="w-100 d-flex flex-column align-items-start">
+                                        <label class="price small">{{ like.product.price }}€</label>
+
+                                        <label class=" ">{{ like.product.name }}</label>
+
+                                    </div>
+
+
+                                </a>
+
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+            {% else %}
+                <h4> Vous n'avez aucun produit dans votre liste d'envie</h4>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+
+{% endblock %}

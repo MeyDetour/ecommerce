@@ -1,0 +1,91 @@
+{% extends './admin/base.html.twig' %}
+{% block title %}Utilisateurs{% endblock %}
+{% set currentPath = path(app.request.attributes.get('_route'),
+    app.request.attributes.get('_route_params')) %}
+
+{% set statut= ['En attente du paiement','En attente de la livraison','En cour de livraison','Livré','Problème lors de la livraison'] %}
+{% set statutPaiement = ['En attente du paiement','Payé'] %}
+{% block body %}
+    <div {{ stimulus_controller('section') }}>
+        <a href="{{ path('app_user_admin') }}"><i class="bi bi-arrow-left me-2"></i> Retour</a>
+        <div class="d-flex flex-row gap-3 my-5 py-5 border-bottom border-top  ">
+            <button class="btn-category" {{ stimulus_action('section','section1','click') }}>Profil</button>
+            <button class="btn-category" {{ stimulus_action('section','section2','click') }}>Adresses de livraison
+            </button>
+            <button class="btn-category" {{ stimulus_action('section','section3','click') }}>Commandes</button>
+            <button class="btn-category" {{ stimulus_action('section','section4','click') }}>Commentaires</button>
+
+        </div>
+        <div class="  flex-column" {{ stimulus_target('section','section1') }}>
+            <div class="d-flex flex-column">
+                <h4 class="black-title">{{ user.firstName }} {{ user.lastName }}</h4>
+                <span>Email : {{ user.email }}</span>
+                <span>Genre : {{ user.genre }}</span>
+            </div>
+            <div class="d-flex flex-column mt-5">
+                <h4 class="black-title">Quelques chiffres</h4>
+                <span>Liste d'envies : {{ user.likes|length }} articles</span>
+                <span>Commandes : {{ user.orders|length }}</span>
+                <span>Commentaires : {{ user.comments|length }}</span>
+                <span>Moyens de paiements : {{ user.payMethodes|length }}</span>
+                <span>Adresses : {{ user.adresses|length }}</span>
+
+            </div>
+        </div>
+        <div class=" flex-row flex-wrap" {{ stimulus_target('section','section2') }}>
+            {% for adresse in user.adresses %}
+                <div class="w-50 p-3 my-4 border rounded-2 d-flex flex-column">
+                    {{ adresse.entireName }}
+                    <span>Nom associé : {{ adresse.entireIdentity }} </span>
+                    <span>Numéro de téléphone associé : {{ adresse.phone }}</span>
+                    <span>Commande(s) associé(es) : {{ adresse.orders|length }}</span>
+                    <span>Commande(s) associé(es) en tant qu'adresse de facturation : {{ adresse.ordersAsBilling|length }}</span>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="  flex-column" {{ stimulus_target('section','section3') }}>
+
+            {% for order in orders %}
+                <a href="{{ path('show_order_admin',{'id':order.id}) }}"
+                   class="my-2 d-flex flex-row border border-dark p-3 rounded-3 justify-content-between">
+                    <div class="w-50 d-flex flex-column align-items-start">
+                        <span>Date de la commande : {{ order.createdAt|date('d-m-Y H:i') }}</span>
+                        <span>Statut :  {{ statut[order.status] }}</span>
+                        <span>Status du paiement : {{ statutPaiement[order.payStatus] }}</span>
+                        <span>Adresse de facturation {{ order.billingAddresse.entireName }}  {{ order.billingAddresse.entireIdentity }}</span>
+                        <span>Adresse de livraison : {{ order.adresse.entireName }}  {{ order.adresse.entireIdentity }}</span>
+                        <span>Commande Ref : {{ order.number }}</span>
+                    </div>
+                    <div class="w-25 d-flex flex-column align-items-start">
+
+                        <span> Nombre de produit : {{ order.items|length }}</span>
+                        <span>Total : {{ order.total }}€</span>
+
+                    </div>
+
+                </a>
+            {% endfor %}
+        </div>
+        <div class=" flex-row flex-wrap w-100" {{ stimulus_target('section','section4') }}>
+
+
+            {% for comment in user.comments %}
+            <div class="border border-dark position-relative  rounded-3 p-3 w-50 m-3 d-flex flex-row justify-content-between">
+                <div class="d-flex flex-column w-50">
+                    <span> Commentaire sur <b>{{ comment.product.name }}</b></span>
+                    <strong>{{ comment.title }}  {{ comment.rate ??  '?' }}/5</strong>
+                    <p>" {{ comment.content }} "</p>
+
+                </div>
+                <div class="d-flex flex-column">
+                    <a class="  " href="{{ path('edit_comment',{'id':comment.id}) }}"><i
+                                class="bi bi-pencil-fill"></i></a>
+
+                </div>
+
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

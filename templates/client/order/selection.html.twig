@@ -1,0 +1,52 @@
+{% set currentPath = path(app.request.attributes.get('_route'),
+    app.request.attributes.get('_route_params')) %}
+
+{% extends './client/base.html.twig' %}
+{% block title %}Votre profil{% endblock %}
+
+{% block body %}
+    <div class="container pt-5">
+        {{ form_start(form) }}
+        <div class="mb-5 d-flex flex-row justify-content-between">
+            <a href="{{ path('app_cart') }}" class="btn-category">Annuler</a>
+            {% if app.user.adresses is not empty and app.user.payMethodes is not empty %}
+                <button type="submit" class=" btn-category">Suivant</button>
+            {% endif %}
+
+        </div>
+        <h1> Choisissez votre adresse de livraison</h1>
+        <ul class="mb-5" >
+            <li>
+                <a href="{{ path('profile_adresse_new') }}">Ajouter une adresse</a>
+            </li>
+            <li>
+                <a href="{{ path('profile_payement_new') }}">Ajouter un mode de payement</a>
+            </li>
+        </ul>
+        {% if app.user.adresses is not empty and app.user.payMethodes is not empty %}
+
+
+            <div class="mb-4">
+                {{ form_label(form.addresseBilling) }}
+                {{ form_widget(form.addresseBilling) }}
+            </div>
+            <div class="mb-4">
+
+                {{ form_label(form.addresseDelivery) }}
+                {{ form_widget(form.addresseDelivery) }}
+            </div>
+            <div class="mb-4">
+                {{ form_label(form.payMethode) }}
+                {{ form_widget(form.payMethode) }}
+            </div>
+
+
+
+
+
+        {% endif %}
+        {{ form_end(form) }}
+    </div>
+
+
+{% endblock %}

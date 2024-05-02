@@ -5,18 +5,21 @@
 {% block body %}
 
     {% for image in prod.images %}
-        {% include '/component/image.html.twig' with  {
-            'route_name':'delete_image',
+        {% include '/component/imageFilter.html.twig' with  {
+            'route_name':'',
             'imgClass':'imageAdded',
+            'filter':'product_index' ,
             'image':image,
-            'param':{'id':image.id},
+            'param':null,
             'aClass':''} %}
+
+        <button><a href="{{ path('delete_image',{'id':image.id}) }}">Supprimer</a></button>
     {% endfor %}
     <h1>Nouveau produt</h1>
     <div class="example-wrapper">
-        {{ form_start(formImage) }}
+        {{ form_start(formImage,{'action': path('images_product',{'id':prod.id}) } ) }}
         {{ form_row(formImage.imageFile,{'attr':{'data-controller':'mydropzone'}}) }}
-        <button type="submit" class="btn btn-primary">creer</button>
+        <button type="submit" class="btn btn-primary">Ajouter l'image</button>
         <a href="{{ path('app_product_admin') }}">Voir les produits</a>
         {{ form_end(formImage) }}
     </div>

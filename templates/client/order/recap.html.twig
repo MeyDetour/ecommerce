@@ -1,0 +1,95 @@
+{% extends './client/base.html.twig' %}
+{% set currentPath = path(app.request.attributes.get('_route'),
+    app.request.attributes.get('_route_params')) %}
+
+{% block title %}Votre profil{% endblock %}
+
+{% block body %}
+    <div class="p-5">
+
+    <div class="d-flex flex-row justify-content-between mt-2 mb-5 align-items-start">
+        <a href="{{ path('delete_order',{'id':order.id}) }}" class=" btn-category">Annuler</a>
+        <div class="d-flex flex-column align-items-end">
+            <div>
+                <a href="{{ path('to_pay_order',{'id':order.id}) }}" class=" btn-category">Payer</a>
+                <a href="{{ path('payement_wait_to_pay',{'id':order.id}) }}" class=" btn-category">Sauvegarder ma commande, je paierai plus tard</a>
+            </div>
+            <span>Si vous payez plus tard les produits ne seront pas reserver. Une rupture de stock est possible.</span>
+        </div>
+
+
+    </div>
+    <h4 class="mt-5">Récapitulatif de la command : </h4>
+
+    <div class="w-100 d-flex flex-row align-items-start justify-content-between">
+
+        <div class="w-75 pe-5 master-container d-flex flex-column  ">
+            {% for item in order.items %}
+
+                <div class="card cardProduit cart">
+                    <label class="title">{{ item.product.name }}</label>
+
+                    <div class="products">
+                        <div class="product">
+                            {% if item.product.images[0] is defined %}
+
+                                <img src="{{ vich_uploader_asset(item.product.images[0])|imagine_filter('product_show') }}"
+                                     class="card-img-top w-25" alt="...">
+                            {% else %}
+                                <img src="{{ asset('images/defaultImageClothe.png')|imagine_filter('product_show') }}"
+                                     class="card-img-top w-25" alt="...">
+                            {% endif %}
+                            <div class="w-50 p-3">
+                                <p>{{ item.product.description }}</p>
+
+                            </div>
+                            <div class="  w-25  d-flex flex-column align-items-end">
+
+                                <label class="price small">{{ item.product.price }}€</label>
+                              <div class="quantity">
+
+                                  <span>Quantité : {{ item.quantity }}</span>
+                              </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+        <div class="w-25 card checkout">
+            <label class="title">Checkout</label>
+
+            <div class="details">
+                <span>Date : </span>
+                <span>{{ order.createdAt|date('d-m-Y') }}</span>
+                <span>Autheur : </span>
+                <span>{{ app.user.email }}</span>
+                <span>Adresse de facturation : </span>
+                <span>{{ order.billingAddresse.entireName }}</span>
+                <span>Adresse de livraison : </span>
+                <span>{{ order.adresse.entireName }}</span>
+                <span>Reference : </span>
+                <span>{{ order.number }}</span>
+
+
+            </div>
+            <hr>
+            <div class="details">
+                {% for item in order.items %}
+                    <span>{{ item.product.name }}  :</span>
+                    <span>{{ item.product.price * item.quantity }}€</span>
+                {% endfor %}
+
+            </div>
+            <div class="checkout--footer">
+                <label class="price"> {{ order.total }} €</label>
+
+            </div>
+
+        </div>
+
+    </div>
+    </div>
+{% endblock %}

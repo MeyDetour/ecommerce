@@ -35,4 +35,10 @@ return [
     'bootstrap' => [
         'version' => '5.3.3',
     ],
+    'axios' => [
+        'version' => '1.6.8',
+    ],
+    'chart.js/auto' => [
+        'version' => '3.9.1',
+    ],
 ];

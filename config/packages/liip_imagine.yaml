@@ -1,0 +1,26 @@
+liip_imagine:
+    # valid drivers options include "gd" or "gmagick" or "imagick"
+    driver: "gd"
+    filter_sets:
+        vignette:
+            filters:
+                thumbnail: { size:  [120, 90], mode: outbound}
+                background: { size:  [120, 90] , postion: center, color: '#f2f2e9' }
+        product_show_miniature:
+            filters:
+                thumbnail: { size: [ 50, 50 ], mode: outbound }
+                background: { size: [ 50, 50 ] , postion: center, color: '#f2f2e9' }
+
+        product_miniature:
+            filters:
+                thumbnail: { size: [ 90, 90 ], mode: outbound }
+                background: { size: [ 90, 90 ] , postion: center, color: '#f2f2e9' }
+        product_show:
+            filters:
+                thumbnail: { size: [ 300, 300 ], mode: outbound }
+                background: { size: [ 300, 300 ] , postion: center, color: '#f2f2e9' }
+
+        product_index:
+            filters:
+                thumbnail: { size: [286, 286 ], mode: cover }
+                background: { size: [ 286, 286 ] , postion: center, color: '#f2f2e9' }

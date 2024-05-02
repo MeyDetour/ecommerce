@@ -4,44 +4,29 @@
 
 {% block body %}
 
-
-    <li class="nav-item">
-        <a class="nav-link" href="{{ path('new_product_admin') }}">new Product</a>
-    </li>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">id</th>
-            <th scope="col">name</th>
-            <th scope="col">description</th>
-            <th scope="col">price</th>
-            <th scope="col">image</th>
-        </tr>
-        </thead>
-        <tbody>
+   {% include '/admin/component/productButton.html.twig' %}
+    <div class="mt-5 d-flex flew-row justify-content-start flex-wrap">
         {% for prod  in products %}
+            <a class="mb-5" href="{{ path('edit_product_admin',{'id':prod.id}) }}">
+                <div class="card me-3 mb-3 d-flex flex-column" href="{{ path('show_product',{'id':prod.id}) }}"
+                   style="width: 18rem;">
+                    {% if prod.images[0] is defined %}
 
-            <tr>
-                <th scope="row">{{ loop.index }}</th>
-                <td>{{ prod.id }}</td>
-                <td><a href="{{ path('show_product',{'id':prod.id}) }}">{{ prod.name }}</a></td>
-                <td>{{ prod.description }}</td>
-                <td>{{ prod.price }}€</td>
-                <td>
-                    {% for image in prod.images %}
-                        <img src="{{ vich_uploader_asset(image) }}" alt="">
-                    {% endfor %}
-                </td>
+                        <img src="{{ vich_uploader_asset(prod.images[0])|imagine_filter('product_index') }}"
+                             class="card-img-top" alt="...">
+                    {% else %}
+                        <img src="{{ asset('images/defaultImageClothe.png') }}" class="card-img-top" alt="...">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ prod.name }}</h5>
+                        <p class="card-text text-truncate">En stock : {{ prod.quantity }} </p>
+                        <p class="card-text text-truncate">{{ prod.price }}€</p>
 
-                <td>
+                    </div>
+                </div>
 
-                    <a href="{{ path('del_product_admin',{'id':prod.id}) }}">Delete</a>
-                    <a href="{{ path('edit_product_admin',{'id':prod.id}) }}">Edit</a>
-                </td>
-            </tr>
+            </a>
+
         {% endfor %}
-
-        </tbody>
-    </table>
+    </div>
 {% endblock %}

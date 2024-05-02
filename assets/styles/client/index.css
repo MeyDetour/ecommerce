@@ -1,0 +1,56 @@
+.homePAge{
+    background: url("/images/siriusBackground.png");
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+
+    z-index: -1;
+
+}
+.homePAge span{
+    font-size: 8em;
+}
+
+
+#productIndexImage{
+    width: 100vw;
+    object-fit: cover;
+    height: 80vh;
+    object-position: top;
+}
+.aboutUsPage{
+    height: 25vh;
+}
+#divSaraLeone{
+    height: 48vh;
+}
+
+#saraLeone{
+    position: relative;
+    background: url("/images/aboutUS/saraLeone.webp");
+    background-size: cover;
+    background-position: center;
+    width: 34vw;
+    height: 80vh;
+}
+#saraLeone span{
+    position: absolute;
+    top: 4%;
+    right: 6%;
+    filter: drop-shadow(2px 4px 6px black);
+}
+#zyanBran{
+    position: relative;
+    background: url("/images/aboutUS/zyanBran.webp");
+    background-size: cover;
+    background-position: center;
+    width: 34vw;
+    height: 80vh;
+}
+#zyanBran span{
+     position: absolute;
+     right: 4%;
+     top: 4%;
+     filter: drop-shadow(2px 4px 6px #2f2f2f);
+ }

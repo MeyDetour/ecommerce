@@ -1,10 +1,129 @@
 {% extends './client/base.html.twig' %}
 
-{% block title %}{{prod.name}}{% endblock %}
+{% block title %}{{ prod.name }}{% endblock %}
 
 {% block body %}
+    <div class="d-flex flex-row container pt-5 justify-content-around" id="showProduct">
+        <div class="d-flex flex-column min-vh-100" id="left">
+            <div class="h-75 d-flex flex-row  justify-content-end pe-5  align-items-center">
+                {% if prod.images is not empty %}
+                    {% for image in prod.images %}
+                        <img src="{{ vich_uploader_asset(image) }}" class="fullImage" alt="">
+                    {% endfor %}
+                {% else %}
+                    <img src="{{ asset('images/defaultImageClothe.png') }}" class="card-img-top" alt="...">
 
-     {{ prod.id }}
-     {{ prod.name }}
-     <button> Ajouter au panier </button>
+                {% endif %}
+
+            </div>
+            <div class="d-flex h-auto flex-row">
+                {% for image in prod.images %}
+                    <img src="{{ vich_uploader_asset(image)|imagine_filter('product_miniature') }}" alt="">
+                {% endfor %}
+            </div>
+        </div>
+        <div class="d-flex flex-column w-50" id="right">
+
+            <h1>{{ prod.name }}</h1>
+
+            <hr>
+            <div class="d-flex flex-row align-items-center justify-content-between">
+                <span class="price">{{ prod.price }}€</span>
+                <div class="d-flex flex-row align-items-center gap-2">
+                    <div class="rating">
+                        <input readonly value="5" name="rate" id="star5" type="radio">
+                        <label title="text" for="star5"></label>
+                        <input readonly value="4" name="rate" id="star4" type="radio">
+                        <label title="text" for="star4"></label>
+                        <input readonly value="3" name="rate" id="star3" type="radio" checked="">
+                        <label title="text" for="star3"></label>
+                        <input readonly value="2" name="rate" id="star2" type="radio">
+                        <label title="text" for="star2"></label>
+                        <input readonly value="1" name="rate" id="star1" type="radio">
+                        <label title="text" for="star1"></label>
+                    </div>
+                    <span>{{ prod.comments|length }} Avis</span>
+                </div>
+            </div>
+            <hr>
+
+            <p>{{ prod.description }}</p>
+            <span style="color: red;">
+                {% if prod.quantity <= 2 %}
+                    {% if prod.quantity == 0 %}
+                        Produit en rupture de stock
+                    {% else %}
+                        Attention, il n'en reste plus que {{ prod.quantity }}
+                        {% if quantityInCart >= prod.quantity %}
+                            , vous en avez deja {{ quantityInCart }} dans votre panier
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            </span>
+
+            <div class="d-flex flex-row gap-4 mt-2 mb-5">
+
+                {% if prod.quantity > 0 and quantityInCart< prod.quantity %}
+                    <a href="{{ path('add_to_cart_from_show',{'id':prod.id,'quantity':1}) }}" class=" btn-category">Ajouter
+                        dans le panier <i class="bi bi-cart"></i></a>
+                {% else %}
+                    <a href="#" class=" btn-category">Ajouter
+                        dans le panier <i class="bi bi-cart"></i></a>
+
+                {% endif %}
+                <div class="btn-category" {{ stimulus_controller('like',{'productId':prod.id})|stimulus_action('like','like','click') }}>
+                    Ajouter dans la liste d'envies <i
+                            class="bi  bi-bag{{ prod.isLikedBy(app.user)? '-heart-fill' : '' }}"></i></div>
+            </div>
+
+            <details class="mb-2">
+                <summary class="p-2 mb-3 border-bottom border-dark">
+                    <div class="d-flex flex-row justify-content-between"><span>Authenticité Garantie</span> <i
+                                class="bi bi-caret-down"></i></div>
+                </summary>
+                Chaque vêtement est certifié authentique, conçu et fabriqué en utilisant des matériaux de haute qualité
+                et en respectant les normes les plus strictes de l'industrie de la mode de luxe.
+            </details>
+            <details class="mb-2">
+                <summary class="p-2 mb-3 border-bottom border-dark">
+                    <div class="d-flex flex-row justify-content-between"><span>Garantie de Qualité</span> <i
+                                class="bi bi-caret-down"></i></div>
+                </summary>
+                Nous garantissons que chaque produit est exempt de défauts de fabrication et de matériaux pendant une
+                période de deux ans à compter de la date d'achat. En cas de défaut constaté, nous nous engageons à
+                réparer ou remplacer l'article sans frais supplémentaires.
+            </details>
+            <details class="mb-2">
+                <summary class="p-2 mb-3 border-bottom border-dark">
+                    <div class="d-flex flex-row justify-content-between"><span>Politique de Retour Flexible</span> <i
+                                class="bi bi-caret-down"></i></div>
+                </summary>
+                Si vous n'êtes pas entièrement satisfait de votre achat, vous pouvez le retourner dans un délai de 30
+                jours pour un échange ou un remboursement complet, selon votre préférence.
+            </details>
+
+            <span class="" id="min-text">Chez Sirius Mode, chaque client est précieux et nous nous efforçons d'offrir une expérience d'achat inégalée, en garantissant que chaque pièce acquise vous apporte entière satisfaction et luxe au quotidien.</span>
+        </div>
+    </div>
+    <div class=" w-100 min-vw-100  dash-bg p-5 d-flex flex-column ">
+        <div class="container pt-5 mt-5">
+            {% for comment in prod.comments %}
+                <div class=" mx text-white d-flex flex-row justify-content-between align-items-start w-100 ">
+                    <div class="d-flex flex-column">
+                        <span>{{ comment.author.firstName }} {{ comment.author.lastName }}</span>
+                        <h4>{{ comment.title }}</h4>
+
+                        <p>{{ comment.content }}</p>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <span>{{ comment.rate }}/5</span>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+        </div>
+
+    </div>
 {% endblock %}

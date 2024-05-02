@@ -1,0 +1,57 @@
+
+{% set currentPath = path(app.request.attributes.get('_route'),
+    app.request.attributes.get('_route_params')) %}
+
+
+<ul class="d-flex flex-column align-items-center min-vh-100 justify-content-center">
+    <li class="mb-5">
+        <a class="grey-tx " href="{{ path('app_logout') }}">LOGOUT</a>
+    </li>
+    <li class="mb-5"><a class="grey-tx
+{{ currentPath == '/profile/adresse' or currentPath == '/profile/adresse/new' or adresse is defined ? 'navbarActive' : ''  }}
+" href="{{ path('profile_adresse') }}">Adresses</a>
+    </li>
+
+
+    <li class="mb-5"><a class="grey-tx
+{{ currentPath == '/profile' ? 'navbarActive' : ''  }}
+" href="{{ path('app_profil') }}">Profil</a>
+    </li>
+
+
+    <li class="mb-5"><a class="grey-tx
+{{ currentPath == '/profile/payement' or currentPath == '/profile/payement/new' or methode is defined ? 'navbarActive' : ''  }}
+
+" href="{{ path('profile_payement') }}">Moyens de paiement</a>
+    </li>
+
+
+
+    <li class="mb-5"><a class="grey-tx
+{{ currentPath == '/profile/commandes'   or order is defined ? 'navbarActive' : ''  }}
+
+" href="{{ path('profile_orders') }}">Commandes</a></li>
+
+
+
+    <li class="mb-5"><a class="grey-tx
+{{ currentPath == '/profile/commentaires' ? 'navbarActive' : ''  }}
+
+" href="{{ path('profile_comments') }}">Commentaires</a></li>
+
+
+
+   <li class="mb-5"><a class="grey-tx
+{{ currentPath == '/profile/envies'? 'navbarActive' : ''  }}
+
+" href="{{ path('profile_envies') }}">Liste d'envie</a></li>
+
+
+
+   <li class="mb-5"><a class="grey-tx
+{{ currentPath == '/panier'  ? 'navbarActive' : ''  }}
+
+" href="{{ path('app_cart') }}">Panier</a></li>
+
+
+</ul>
