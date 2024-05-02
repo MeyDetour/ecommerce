@@ -36,12 +36,10 @@ class ProductType extends AbstractType
             ])
             ->add('quantity',IntegerType::class,[
                 'label'=>'Quantité',
-                'data'=>0
             ])
             ->add('price',MoneyType::class,[
                 'label'=>'Prix'
             ]) ->add('visibility',CheckboxType::class,[
-                'data'=>true
             ])
 
             ->add('categories',EntityType::class,[

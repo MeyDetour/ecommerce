@@ -62,10 +62,10 @@ class Product
     private ?string $longDescription = null;
 
     #[ORM\Column]
-    private ?int $quantity = null;
+    private ?int $quantity = 0;
 
     #[ORM\Column]
-    private ?bool $visibility = null;
+    private ?bool $visibility = true;
 
     /**
      * @var Collection<int, ProductVariant>
