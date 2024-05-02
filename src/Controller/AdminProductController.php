@@ -116,8 +116,8 @@ class AdminProductController extends AbstractController
 
     #[Route('delete/{id}', name: 'del_product_admin')]
     public function delete(Product $product, EntityManagerInterface $manager): Response
-    {
-        $manager->remove($product);
+    {$product->setVisibility(false);
+        $manager->persist($product);
         $manager->flush();
         return $this->redirectToRoute('app_product_admin');
     }
