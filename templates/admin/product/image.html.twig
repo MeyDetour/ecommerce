@@ -3,24 +3,34 @@
 
 
 {% block body %}
+    <div class="d-flex flex-row justify-content-between  border-bottom pb-3 pt-5 mb-3 align-items-start">
+        <h4 class="black-title">Images de l'article</h4>
+        <a class="btn-category" href="{{ path('app_product_admin') }}">Voir les produits</a>
 
-    {% for image in prod.images %}
-        {% include '/component/imageFilter.html.twig' with  {
-            'route_name':'',
-            'imgClass':'imageAdded',
-            'filter':'product_index' ,
-            'image':image,
-            'param':null,
-            'aClass':''} %}
-
-        <button><a href="{{ path('delete_image',{'id':image.id}) }}">Supprimer</a></button>
-    {% endfor %}
-    <h1>Nouveau produt</h1>
-    <div class="example-wrapper">
+    </div>
+    <div class="example-wrapper my-5">
         {{ form_start(formImage,{'action': path('images_product',{'id':prod.id}) } ) }}
         {{ form_row(formImage.imageFile,{'attr':{'data-controller':'mydropzone'}}) }}
-        <button type="submit" class="btn btn-primary">Ajouter l'image</button>
-        <a href="{{ path('app_product_admin') }}">Voir les produits</a>
-        {{ form_end(formImage) }}
+        <button type="submit" class="btn-category">Ajouter l'image</button>
+          {{ form_end(formImage) }}
     </div>
+    <div class="d-flex flex-wrap flex-row gap-3">
+        {% for image in prod.images %}
+
+            <div class="d-flex flex-column align-items-cente r">
+            {% include '/component/imageFilter.html.twig' with  {
+                'route_name':'',
+                'imgClass':'imageAdded',
+                'filter':'product_index' ,
+                'image':image,
+                'param':null,
+                'aClass':''} %}
+
+            <a class="btn-category" href="{{ path('delete_image',{'id':image.id}) }}">Supprimer</a>
+        </div>
+
+        {% endfor %}
+    </div>
+
+
 {% endblock %}

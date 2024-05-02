@@ -19,7 +19,10 @@ liip_imagine:
             filters:
                 thumbnail: { size: [ 300, 300 ], mode: outbound }
                 background: { size: [ 300, 300 ] , postion: center, color: '#f2f2e9' }
-
+        product_index_admin:
+            filters:
+                thumbnail: { size: [ 286 , 300 ], mode: cover }
+                background: { size: [ 286, 300 ] , postion: center, color: '#f2f2e9' }
         product_index:
             filters:
                 thumbnail: { size: [ 286 , 463.991 ], mode: cover }

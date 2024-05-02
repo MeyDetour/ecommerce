@@ -4,11 +4,11 @@
 
 {% block body %}
     <div class="d-flex flex-row container pt-5 justify-content-around" id="showProduct">
-        <div class="d-flex flex-column min-vh-100" id="left">
+        <div  {{ stimulus_controller('carousel') }}  class="d-flex flex-column min-vh-100" id="left">
             <div class="h-75 d-flex flex-row  justify-content-end pe-5  align-items-center">
                 {% if prod.images is not empty %}
                     {% for image in prod.images %}
-                        <img src="{{ vich_uploader_asset(image) }}" class="fullImage" alt="">
+                        <img {{ stimulus_target('carousel','fullImage')}} src="{{ vich_uploader_asset(image) }}" class="fullImage" alt="">
                     {% endfor %}
                 {% else %}
                     <img src="{{ asset('images/defaultImageClothe.png') }}" class="card-img-top" alt="...">
@@ -16,9 +16,9 @@
                 {% endif %}
 
             </div>
-            <div class="d-flex h-auto flex-row">
+            <div class="d-flex h-auto flex-row gap-1">
                 {% for image in prod.images %}
-                    <img src="{{ vich_uploader_asset(image)|imagine_filter('product_miniature') }}" alt="">
+                    <img {{ stimulus_target('carousel','minImage')}} src="{{ vich_uploader_asset(image)|imagine_filter('product_miniature') }}" alt="">
                 {% endfor %}
             </div>
         </div>

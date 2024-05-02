@@ -8,12 +8,12 @@
     <div class="mt-5 d-flex flew-row justify-content-start flex-wrap">
         {% for prod  in products %}
             <a class="mb-5" href="{{ path('edit_product_admin',{'id':prod.id}) }}">
-                <div class="card me-3 mb-3 d-flex flex-column" href="{{ path('show_product',{'id':prod.id}) }}"
+                <div class="card  me-3 mb-3 d-flex flex-column" href="{{ path('show_product',{'id':prod.id}) }}"
                    style="width: 18rem;">
                     {% if prod.images[0] is defined %}
 
-                        <img src="{{ vich_uploader_asset(prod.images[0])|imagine_filter('product_index') }}"
-                             class="card-img-top" alt="...">
+                        <img src="{{ vich_uploader_asset(prod.images[0])|imagine_filter('product_index_admin') }}"
+                           alt="...">
                     {% else %}
                         <img src="{{ asset('images/defaultImageClothe.png') }}" class="card-img-top" alt="...">
                     {% endif %}

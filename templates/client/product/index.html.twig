@@ -10,8 +10,8 @@
         <div class="d-flex flex-row flex-wrap gap-2 mt-4 mb-5">
             {% for cat in categories %}
 
-                    <a href="{{ path('find_by_categorie',{'categoryName':cat.name}) }}"
-                            class="btn-category ">{{ cat.name }}</a>
+                <a href="{{ path('find_by_categorie',{'categoryName':cat.name}) }}"
+                   class="btn-category ">{{ cat.name }}</a>
 
             {% endfor %}
         </div>
@@ -19,26 +19,28 @@
     <div class=" dash-bg">
         <div class="container py-5 ">
             <h4 class="white-title">Dernières nouveautées</h4>
-            <div class="  mt-5 d-flex flew-row justify-content-start flex-wrap">
+            <div class="mt-5 d-flex flew-row justify-content-start flex-wrap">
 
                 {% for prod  in products %}
                     {% if loop.index <= 4 %}
-                    <div class="mb-5">
-                        <a class="card cardBootstrap me-3 mb-3 d-flex flex-column" href="{{ path('show_product',{'id':prod.id}) }}"
-                           >
-                            {% if prod.images[0] is defined %}
+                        <div class="mb-5">
+                            <a  class="  card cardBootstrap me-3 mb-3 d-flex flex-column"
+                               href="{{ path('show_product',{'id':prod.id}) }}"
+                            >
+                                {% if prod.images[0] is defined %}
 
-                                <img src="{{ vich_uploader_asset(prod.images[0])|imagine_filter('product_index') }}"
-                                     class="card-img-top" alt="...">
-                            {% else %}
-                                <img src="{{ asset('images/defaultImageClothe.png') }}" class="card-img-top" alt="...">
-                            {% endif %}
-                            <div class="card-body">
-                                <h5 class="white-title fs-5">{{ prod.name }}</h5>
+                                    <img   src="{{ vich_uploader_asset(prod.images[0])|imagine_filter('product_index') }}"
+                                         class="card-img-top" alt="...">
+                                {% else %}
+                                    <img src="{{ asset('images/defaultImageClothe.png') }}" class="card-img-top"
+                                         alt="...">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h5 class="white-title fs-5">{{ prod.name }}</h5>
 
-                            </div>
-                        </a>
-    </div>
+                                </div>
+                            </a>
+                        </div>
                     {% endif %}
 
                 {% endfor %}
@@ -51,28 +53,29 @@
         <div class="container py-5 ">
             <h4 class="white-title">Tous les articles</h4>
             <div class="  mt-5 d-flex flew-row justify-content-start flex-wrap">
-            {% for prod  in products %}
-                <div class="mb-5">
-                    <a class="card cardBootstrap me-3 mb-3 d-flex flex-column" href="{{ path('show_product',{'id':prod.id}) }}"
-                       style="width: 18rem;">
-                        {% if prod.images[0] is defined %}
+                {% for prod  in products %}
+                    <div class="mb-5">
+                        <a class="card cardBootstrap me-3 mb-3 d-flex flex-column"
+                           href="{{ path('show_product',{'id':prod.id}) }}"
+                           style="width: 18rem;">
+                            {% if prod.images[0] is defined %}
 
-                            <img src="{{ vich_uploader_asset(prod.images[0])|imagine_filter('product_index') }}"
-                                 class="card-img-top" alt="...">
-                        {% else %}
-                            <img src="{{ asset('images/defaultImageClothe.png') }}" class="card-img-top" alt="...">
-                        {% endif %}
-                        <div class="card-body">
-                            <h5 class="white-title fs-5">{{ prod.name }}</h5>
+                                <img src="{{ vich_uploader_asset(prod.images[0])|imagine_filter('product_index') }}"
+                                     class="card-img-top" alt="...">
+                            {% else %}
+                                <img src="{{ asset('images/defaultImageClothe.png') }}" class="card-img-top" alt="...">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="white-title fs-5">{{ prod.name }}</h5>
 
-                        </div>
-                    </a>
+                            </div>
+                        </a>
 
-                      </div>
+                    </div>
 
-            {% endfor %}
+                {% endfor %}
 
-        </div>
+            </div>
         </div>
     </div>
 
