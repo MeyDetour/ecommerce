@@ -22,5 +22,5 @@ liip_imagine:
 
         product_index:
             filters:
-                thumbnail: { size: [286, 463.991 ], mode: cover }
-                background: { size: [ 286, 463.991 ] , postion: center, color: '#f2f2e9' }
+                thumbnail: { size: [463.991, 286 ], mode: cover }
+                background: { size: [ 463.991, 286 ] , postion: center, color: '#f2f2e9' }
