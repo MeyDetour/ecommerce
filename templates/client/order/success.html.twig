@@ -7,7 +7,12 @@
 {% block title %}Votre profil{% endblock %}
 
 {% block body %}
-  <div class="container py-5">
+
+  <div class="container">
+      success
+  </div>
+
+{#  <div class="container py-5">
     <div class="d-flex flex-row justify-content-between mt-2 mb-5">
         {% if currentPath starts with '/order/profil' %}
       <a href="{{ path('profile_orders_show',{'id':order.id}) }}" class="btn-category">Annuler</a>{% else %}
@@ -36,6 +41,6 @@
 
 </div>
 
-  </div>
+  </div>#}
 
   {% endblock %}

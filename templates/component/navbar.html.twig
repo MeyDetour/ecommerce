@@ -47,6 +47,11 @@ min-vw-100 navbarClient  shadow-lg">
                             <a class="nav-link grey-tx" href="{{ path('app_statistique_admin') }}">Admin</a>
                         </li>
                     {% endif %}
+                    {% if "ROLE_PREPARATION" in app.user.roles %}
+                        <li class="nav-item">
+                            <a class="nav-link grey-tx" href="{{ path('app_order_admin') }}">Commandes</a>
+                        </li>
+                    {% endif %}
                 {% endif %}
             </ul>
         </div>

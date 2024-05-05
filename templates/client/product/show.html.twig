@@ -30,18 +30,7 @@
             <div class="d-flex flex-row align-items-center justify-content-between">
                 <span class="price">{{ prod.price }}€</span>
                 <div class="d-flex flex-row align-items-center gap-2">
-                    <div class="rating">
-                        <input readonly value="5" name="rate" id="star5" type="radio">
-                        <label title="text" for="star5"></label>
-                        <input readonly value="4" name="rate" id="star4" type="radio">
-                        <label title="text" for="star4"></label>
-                        <input readonly value="3" name="rate" id="star3" type="radio" checked="">
-                        <label title="text" for="star3"></label>
-                        <input readonly value="2" name="rate" id="star2" type="radio">
-                        <label title="text" for="star2"></label>
-                        <input readonly value="1" name="rate" id="star1" type="radio">
-                        <label title="text" for="star1"></label>
-                    </div>
+
                     <span>{{ prod.comments|length }} Avis</span>
                 </div>
             </div>
@@ -58,6 +47,9 @@
                             , vous en avez deja {{ quantityInCart }} dans votre panier
                         {% endif %}
                     {% endif %}
+                {% elseif quantityInCart >= prod.quantity %}
+                    Attention, il n'en reste plus que {{ prod.quantity }}
+                    , vous en avez deja {{ quantityInCart }} dans votre panier
                 {% endif %}
             </span>
 

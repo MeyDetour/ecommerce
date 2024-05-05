@@ -356,6 +356,17 @@ class Product
 
 
     }
+    public function getCountProductVariantSells(): ?int
+    {$count = 0;
+        foreach ($this->productVariants as $variant) {
+            if ($variant->isSell()) {
+               $count++;
+            }
+        }
+        return $count;
+
+
+    }
 
     public function addProductVariant(ProductVariant $productVariant): static
     {

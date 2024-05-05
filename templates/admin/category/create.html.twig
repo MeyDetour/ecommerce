@@ -6,7 +6,7 @@
     <div class="example-wrapper">
         {{ form_start(formCat) }}
         {{ form_row(formCat.name) }}
-        <button type="submit" class="btn btn-primary">crreer</button>
+        <button type="submit" class="btn btn-primary">{{ cat is defined ? 'Modifier' : 'Créer' }}</button>
         {{ form_end(formCat) }}
     </div>
 {% endblock %}

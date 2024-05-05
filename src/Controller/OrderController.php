@@ -16,6 +16,8 @@ use App\Repository\PayMethodeRepository;
 use App\Service\CartService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
@@ -108,6 +110,8 @@ class OrderController extends AbstractController
         $manager->remove($order);
         $manager->flush();
     }
+
+
 
     #[Route('/cart/addorder/{id}', name: 'add_order_to_cart')]
     public function addOrderToCart(Order $order ,EntityManagerInterface $manager ,  CartService $cartService): Response
@@ -206,7 +210,7 @@ class OrderController extends AbstractController
     }
 
     #[Route('/order/details/{id}', name: 'payement_is_valid')]
-    public function orderDetails(EntityManagerInterface $manager, CartService $cartService, Order $order): Response
+    public function payementIsValid(EntityManagerInterface $manager, CartService $cartService, Order $order): Response
     {
 
         $user = $this->getUser();
@@ -237,20 +241,10 @@ class OrderController extends AbstractController
             $manager->persist($item);
         }
         $manager->flush();
-        $cartService->empty();
-        return $this->redirectToRoute('profile_orders');
+        $cartService->empty(); return $this->redirectToRoute('profile_orders_show',['id'=>$order->getId()]);
+
     }
 
-    #[Route('/order/profil/pay/{id}', name: 'to_pay_order_from_profil')]
-    #[Route('/order/pay/{id}', name: 'to_pay_order')]
-    public function pay(EntityManagerInterface $manager, CartService $cartService, Order $order): Response
-    {
-        $user = $this->getUser();
-        if (!$user) {
-            return $this->redirectToRoute('app_login');
-        }
-        return $this->render('client/order/pay.html.twig', ['order' => $order]);
-    }
 
     #[Route('/order/details/wait/{id}', name: 'payement_wait_to_pay')]
     public function waitToPay(EntityManagerInterface $manager, CartService $cartService, Order $order): Response
@@ -262,8 +256,21 @@ class OrderController extends AbstractController
         }
 
         $cartService->empty();
-        return $this->redirectToRoute('profile_orders');
+        return $this->redirectToRoute('profile_orders_show',['id'=>$order->getId()]);
     }
 
-
+    #[Route('/order/pdf/{id}', name: 'generate_pdf_order')]
+    public function generatePdf(Pdf $knpSnappyPdf , Order $order): Response
+    {
+        if (!$this->getUser() or $order->getAuthor()!=$this->getUser()){
+            return $this->redirectToRoute('profile_orders');
+        }
+        $html = $this->renderView('client/order/facturation.html.twig', array(
+            'order'  => $order
+        ));
+        return new PdfResponse(
+            $knpSnappyPdf->getOutputFromHtml($html),
+            'file.pdf'
+        );
+    }
 }

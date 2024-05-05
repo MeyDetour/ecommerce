@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class AdminCategoryController extends AbstractController
 {
 
-    #[Route('/', name: 'app_category_category')]
+    #[Route('/', name: 'app_category_admin')]
     public function indexAdmin(CategoryRepository $categoryRepository): Response
     {
         return $this->render('admin/category/index.html.twig', [
@@ -33,10 +33,25 @@ class AdminCategoryController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $manager->persist($category);
             $manager->flush();
-            return $this->redirectToRoute('app_category');
+            return $this->redirectToRoute('app_category_admin');
         }
         return $this->render('admin/category/create.html.twig', [
             'formCat' =>$form->createView(),
+        ]);
+    }
+    #[Route('/{id}', name: 'edit_category_admin')]
+    public function edit(Request $request ,Category $category ,EntityManagerInterface $manager): Response
+    {
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $manager->persist($category);
+            $manager->flush();
+            return $this->redirectToRoute('app_category_admin');
+        }
+        return $this->render('admin/category/create.html.twig', [
+            'formCat' =>$form->createView(),
+            'cat'=>$category
         ]);
     }
 

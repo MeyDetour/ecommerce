@@ -37,7 +37,8 @@
                                     {% endif %}
                                     <div class="w-75 p-3">
                                         <p>{{ elt.description }}</p>
-
+<p>Acheté : {{ elt.orderItems|length }}</p>
+<p>Produits vendus : {{ elt.CountProductVariantSells }}</p>
                                     </div>
                                 </a>
 

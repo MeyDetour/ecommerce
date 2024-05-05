@@ -22,7 +22,7 @@
 
          <tr>
             <th scope="row">{{ loop.index }}</th>
-            <td>{{ cat.name }}</td>
+            <td><a href="{{ path('edit_category_admin',{'id':cat.id}) }}">{{ cat.name }}</a> </td>
             <td><a href="{{ path('del_category',{'id':cat.id}) }}">Delete</a></td>
         </tr>
         {% endfor %}

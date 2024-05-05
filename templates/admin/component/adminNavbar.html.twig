@@ -13,30 +13,40 @@
 
     </div>
     <ul class="adminNavbarOption d-flex flex-column gap-2 align-items-center">
-    {% if app.user %}
-        {% if "ROLE_ADMIN" in app.user.roles %}
+        {% if app.user %}
+            {% if "ROLE_ADMIN" in app.user.roles %}
+                <li class="nav-item">
+                    <a class="{{ currentPath starts with '/admin/category' ? 'gold-tx' : 'nav-link' }}"
+                       href="{{ path('app_category_admin') }}">{% if currentPath starts with '/admin/category' %}<i
+                            class="bi bi-caret-right-fill me-1"></i>{% endif %}Categories</a>
+                </li>
 
-            <li class="nav-item">
-                <a class="{{ currentPath starts with '/admin/category' ? 'gold-tx' : 'nav-link'  }}" href="{{ path('app_category_category') }}">{% if currentPath starts with '/admin/category' %}<i class="bi bi-caret-right-fill me-1"></i>{% endif %}Categories</a>
-            </li>
+                <li class="nav-item">
+                    <a class="{{ currentPath starts with '/admin/product' ? 'gold-tx' : 'nav-link' }}"
+                       href="{{ path('app_product_admin') }}">{% if currentPath starts with '/admin/product' %}<i
+                            class="bi bi-caret-right-fill me-1"></i>{% endif %}Produits</a>
+                </li>
+                <li class="nav-item">
+                    <a class="{{ currentPath starts with '/admin/user' ? 'gold-tx' : 'nav-link' }}"
+                       href="{{ path('app_user_admin') }}">{% if currentPath starts with '/admin/user' %}<i
+                            class="bi bi-caret-right-fill me-1"></i>{% endif %}utilisateurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="{{ currentPath == '/admin/' ? 'gold-tx' : 'nav-link' }}"
+                       href="{{ path('app_statistique_admin') }}">{% if currentPath == '/admin/' %}<i
+                            class="bi bi-caret-right-fill me-1"></i>{% endif %}statistiques</a>
+                </li>
 
-            <li class="nav-item">
-                <a class="{{ currentPath starts with '/admin/product' ? 'gold-tx' : 'nav-link'  }}" href="{{ path('app_product_admin') }}">{% if currentPath starts with '/admin/product' %}<i class="bi bi-caret-right-fill me-1"></i>{% endif %}Produits</a>
-            </li>
-            <li class="nav-item">
-                <a class="{{ currentPath starts with '/admin/user' ? 'gold-tx' : 'nav-link'  }}" href="{{ path('app_user_admin') }}">{% if currentPath starts with '/admin/user' %}<i class="bi bi-caret-right-fill me-1"></i>{% endif %}utilisateurs</a>
-            </li>
-            <li class="nav-item">
-                <a class="{{ currentPath == '/admin/' ? 'gold-tx' : 'nav-link'  }}" href="{{ path('app_statistique_admin') }}">{% if currentPath == '/admin/' %}<i class="bi bi-caret-right-fill me-1"></i>{% endif %}statistiques</a>
-            </li>
-            <li class="nav-item">
-                <a class="{{ currentPath starts with '/admin/order' ? 'gold-tx' : 'nav-link'  }}" href="{{ path('app_order_admin') }}">{% if currentPath starts with '/admin/order' %}<i class="bi bi-caret-right-fill me-1"></i>{% endif %}Commandes</a>
-            </li>
-
-
+            {% endif %}
+            {% if "ROLE_PREPARATION" in app.user.roles or  "ROLE_ADMIN" in app.user.roles %}
+                <li class="nav-item">
+                    <a class="{{ currentPath starts with '/admin/order' ? 'gold-tx' : 'nav-link' }}"
+                       href="{{ path('app_order_admin') }}">{% if currentPath starts with '/admin/order' %}<i
+                            class="bi bi-caret-right-fill me-1"></i>{% endif %}Commandes</a>
+                </li>
+            {% endif %}
         {% endif %}
-    {% endif %}
     </ul>
- <a class="nav-link  backToWebsite" href="{{ path('app_home') }}">Retour au site</a>
+    <a class="nav-link  backToWebsite" href="{{ path('app_home') }}">Retour au site</a>
 
 </nav>
