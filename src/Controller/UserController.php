@@ -121,7 +121,7 @@ class UserController extends AbstractController
             $manager->flush();
             return $this->redirectToRoute('profile_payement');
         }
-        return $this->render('/client/user/pay.html.twig.twig', [
+        return $this->render('/client/user/pay.html.twig', [
             'form' => $form->createView(),
 
         ]);
@@ -141,7 +141,7 @@ class UserController extends AbstractController
             $manager->flush();
             return $this->redirectToRoute('profile_payement');
         }
-        return $this->render('/client/user/pay.html.twig.twig', [
+        return $this->render('/client/user/pay.html.twig', [
             'form' => $form->createView(),
             'methode' => $methode
         ]);
