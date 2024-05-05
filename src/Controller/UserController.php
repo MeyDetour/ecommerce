@@ -103,7 +103,7 @@ class UserController extends AbstractController
     {
 
 
-        return $this->render('/client/user/pay.html.twig.twig', [
+        return $this->render('/client/user/pay.html.twig', [
 
         ]);
     }
