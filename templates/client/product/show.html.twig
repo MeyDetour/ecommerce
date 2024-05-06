@@ -63,9 +63,11 @@
                         dans le panier <i class="bi bi-cart"></i></a>
 
                 {% endif %}
+                {% if app.user %}
                 <div class="btn-category" {{ stimulus_controller('like',{'productId':prod.id})|stimulus_action('like','like','click') }}>
                     Ajouter dans la liste d'envies <i
                             class="bi  bi-bag{{ prod.isLikedBy(app.user)? '-heart-fill' : '' }}"></i></div>
+           {% endif %}
             </div>
 
             <details class="mb-2">
