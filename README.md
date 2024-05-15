@@ -1,1 +1,1 @@
-[https://www.figma.com/design/iESXQEzzoqzAGqi3cglo0G/MOD-LUXE?node-id=5-4&t=3hI1zUpbAe9rijZz-0](https://www.figma.com/proto/iESXQEzzoqzAGqi3cglo0G/MOD-LUXE?node-id=51-145&t=3dRv0LyWcWRr2dY5-1&scaling=contain&page-id=5%3A4&starting-point-node-id=51%3A95)
+https://www.figma.com/proto/iESXQEzzoqzAGqi3cglo0G/MOD-LUXE?node-id=51-145&t=3dRv0LyWcWRr2dY5-1&scaling=contain&page-id=5%3A4&starting-point-node-id=51%3A95
