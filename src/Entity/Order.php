@@ -278,6 +278,13 @@ class Order
     }
 
 
-
+    public function getProductCount(): ?int
+    {
+        $count = 0;
+        foreach ($this->getItems() as $item){
+            $count += $item->getQuantity();
+        }
+        return $count;
+    }
 
 }

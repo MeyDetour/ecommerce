@@ -47,7 +47,7 @@ class AdminProductController extends AbstractController
             $manager->persist($product);
             $manager->flush();
 
-            for ($i = 0; $i < $product->getQuantityWanted(); $i++) {
+            for ($i = 0; $i < $product->getQuantity(); $i++) {
                 $productVariant = new ProductVariant();
                 $productVariant->setNumber($this->generateUniqueProductNumber($productVariantRepository));
                 $productVariant->setProduct($product);
@@ -85,8 +85,8 @@ class AdminProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($product);
             $manager->flush();
-            if ($product->getQuantityWanted()> $cp->getQuantity()){
-                for ($i = $cp->getQuantity(); $i <= $product->getQuantityWanted(); $i++) {
+            if ($product->getQuantity()> $cp->getQuantity()){
+                for ($i = $cp->getQuantity(); $i <= $product->getQuantity(); $i++) {
                     $productVariant = new ProductVariant();
 
                     $productVariant->setSell(false);
@@ -96,8 +96,8 @@ class AdminProductController extends AbstractController
                     $manager->flush();
                 }
             }
-            if($product->getQuantityWanted() < $cp->getQuantity()){
-                for ($i = $cp->getQuantity(); $i > $product->getQuantityWanted(); $i--) {
+            if($product->getQuantity() < $cp->getQuantity()){
+                for ($i = $cp->getQuantity(); $i > $product->getQuantity(); $i--) {
                     $productVariant = $product->getProductVariantFree();
 
                     $manager->remove($productVariant);

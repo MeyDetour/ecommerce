@@ -41,7 +41,7 @@
             {% if "ROLE_PREPARATION" in app.user.roles or  "ROLE_ADMIN" in app.user.roles %}
                 <li class="nav-item">
                     <a class="{{ currentPath starts with '/admin/order' ? 'gold-tx' : 'nav-link' }}"
-                       href="{{ path('app_order_admin') }}">{% if currentPath starts with '/admin/order' %}<i
+                       href="{{ path('app_preparator_order') }}">{% if currentPath starts with '/admin/order' %}<i
                             class="bi bi-caret-right-fill me-1"></i>{% endif %}Commandes</a>
                 </li>
             {% endif %}

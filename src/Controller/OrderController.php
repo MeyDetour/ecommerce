@@ -229,15 +229,7 @@ class OrderController extends AbstractController
 
         foreach ($order->getItems() as $item) {
             $product = $item->getProduct();
-            $quantity = $item->getQuantity();
-            for ($i = 0; $i < $quantity; $i++) {
-                $productVariant = $product->getProductVariantFree();
-                $productVariant->setSell(true);
-                $productVariant->setCommand($item->getOrderCommand());
-
-                $manager->persist($productVariant);
-                $item->addProductVariant($productVariant);
-            }
+            $product->setQuantity($product->getQuantity()-1);
             $manager->persist($item);
         }
         $manager->flush();

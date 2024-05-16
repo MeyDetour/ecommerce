@@ -3,8 +3,8 @@
   <component name="PHPUnit">
     <option name="directories">
       <list>
-        <option value="$PROJECT_DIR$/symfony-7-stripe-payment-gateway/tests" />
         <option value="$PROJECT_DIR$/tests" />
+        <option value="$PROJECT_DIR$/symfony-7-stripe-payment-gateway/tests" />
       </list>
     </option>
   </component>

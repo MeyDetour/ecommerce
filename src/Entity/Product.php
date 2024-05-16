@@ -304,20 +304,10 @@ class Product
 
     public function getQuantity(): ?int
     {
-        $availableCount = 0;
 
-        foreach ($this->productVariants as $variant) {
-            if (!$variant->isSell()) {
-                $availableCount++;
-            }
-        }
-
-        return $availableCount;
-    }
-    public function getQuantityWanted(): ?int
-    {
         return $this->quantity;
     }
+
     public function setQuantity(int $quantity): static
     {
         $this->quantity = $quantity;
@@ -397,6 +387,7 @@ class Product
     {
         return $this->comments;
     }
+
     public function isCommentedBy(User $user): bool
     {
         foreach ($this->comments as $comment){
