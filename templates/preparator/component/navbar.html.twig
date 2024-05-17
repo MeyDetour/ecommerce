@@ -2,7 +2,7 @@
     <nav class="preparatorNav border-dark  pb-4  border-bottom d-flex flex-row justify-content-between">
         <ul class="gap-5 m-0  d-flex flex-row justify-content-between">
             <li>
-                <a class="fs-32 {{ currentPath == '/admin/order/' ?'active' }} " href="{{ path('app_preparator_order') }}" >A livrer</a>
+                <a class="fs-32 {{ currentPath == '/admin/order/' or currentPath starts with '/admin/order/todelivry/' ?'active' }} " href="{{ path('app_preparator_order') }}" >A livrer</a>
             </li>
             <li>
                 <a class="fs-32 {{ currentPath == '/admin/order/delivry' ?'active' }} " href="{{ path('app_order_delivry') }}">En livraison</a>
@@ -10,11 +10,16 @@
             <li>
                 <a class="fs-32 {{ currentPath == '/admin/order/finish' ?'active' }} " href="{{ path('app_order_finished') }}">Livré</a>
             </li>
-        </ul>
-        <ul class="m-0">
             <li>
-                <a class="fs-32" href="#">Total : 2/12</a>
+                <a class="fs-32 {{ currentPath == '/admin/order/issu' ?'active' }} " href="{{ path('app_order_issu') }}">Probleme</a>
             </li>
         </ul>
+        {% if orderList is defined %}
+        <ul class="m-0">
+            <li>
+                <a class="fs-32" href="#">Total : {{ orderList.orderDelivryCount }}/{{ orderList.orders|length }}</a>
+            </li>
+        </ul>
+        {% endif %}
     </nav>
 </div>

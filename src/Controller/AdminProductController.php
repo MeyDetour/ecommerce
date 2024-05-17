@@ -79,22 +79,28 @@ class AdminProductController extends AbstractController
     #[Route('/edit/{id}', name: 'edit_product_admin')]
     public function edit(Product $product, Request $request, ProductVariantRepository $productVariantRepository ,EntityManagerInterface $manager): Response
     {
+        $cp = clone $product;
         $form = $this->createForm(ProductType::class, $product);
+
         $form->handleRequest($request);
-        $cp = $product;
+
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($product);
             $manager->flush();
             if ($product->getQuantity()> $cp->getQuantity()){
-                for ($i = $cp->getQuantity(); $i <= $product->getQuantity(); $i++) {
+
+                  for ($i = $cp->getQuantity()+1; $i <= $product->getQuantity(); $i++) {
                     $productVariant = new ProductVariant();
 
                     $productVariant->setSell(false);
                     $productVariant->setNumber($this->generateUniqueProductNumber($productVariantRepository));
                     $productVariant->setProduct($product);
+
                     $manager->persist($productVariant);
                     $manager->flush();
+
                 }
+
             }
             if($product->getQuantity() < $cp->getQuantity()){
                 for ($i = $cp->getQuantity(); $i > $product->getQuantity(); $i--) {

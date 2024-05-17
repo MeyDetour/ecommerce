@@ -5,51 +5,64 @@
 {% block body %}
     <div class="containerMade d-flex flex-column align-items-end">
 
-        {% if currentPath == '/admin/order/' %}
-            <a class="mb-5 blueBtn fs-32" href="{{ path('') }}">
-                Continuer la préparation
-            </a>
-            <div class="overflow-y-scroll w-100">
-                {% for order in orderToDelivry %}
-                    <a href="{{ path('show_order_admin',{'id':order.id}) }}" class="my-3 w-100 fs-32 order orderRed">
-                        <div class=" p-3 centered number">
-                            {{ loop.index }}
-                        </div>
-                        <div class="information p-3 py-4">
-                            <div>
-
-                                <h1 class="fs-32">N°{{ order.number }}</h1>
-                                <span class="fs-32">Date : {{ order.createdAt|date('d-m-Y') }}</span>
+        {% if currentPath starts with '/admin/order/todelivry/' or currentPath == '/admin/order/' %}
+            {% if orderList is  defined %}
+                <a class="mb-5 blueBtn fs-32" href="{{ path('next_order_admin',{'id':orderList.id}) }}">
+                    Continuer la préparation
+                </a>
+                {% endif %}
+                <div class="overflow-y-scroll w-100">
+                    {% if orderList is defined %}
+                    {% for order in orderList.orders %}
+                        <a {% if order.status == 1%} href="{{ path('show_order_admin',{'id':order.id}) }}" {% else %}href="{{ path('information_order_admin',{'id':order.id}) }}" {% endif %}
+                           class="my-3 w-100 fs-32 order {{ order.status == 1 ? 'orderRed' : 'orderGreen' }}">
+                            <div class=" p-3 centered number">
+                                {{ loop.index }}
                             </div>
-                            <span>Total : {{ order.productCount}} article{{ order.productCount>1 ?'s' }}</span>
-                        </div>
-                    </a>
-                {% endfor %}
-            </div>
+                            <div class="information p-3 py-4">
+                                <div>
+
+                                    <h1 class="fs-32">N°{{ order.number }}</h1>
+                                    <span class="fs-32">Date : {{ order.createdAt|date('d-m-Y') }}</span>
+                                </div>
+                                <span>Total : {{ order.productCount }} article{{ order.productCount>1 ?'s' }}</span>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    {% else %}
+                        <h1>Vous n'avez aucune commande à livré</h1>
+                    {% endif %}
+                </div>
+
         {% endif %}
         {% if currentPath == '/admin/order/delivry' %}
             <div class="overflow-y-scroll w-100">
-                {% for order in orderInDelivrance %}
-                    <a href="{{ path('show_order_admin',{'id':order.id}) }}"  class="my-3 w-100 fs-32 order orderGreen">
-                        <div class=" p-3 centered number">
-                            {{ loop.index }}
-                        </div>
-                        <div class="information p-3 py-4">
-                            <div>
-
-                                <h1 class="fs-32">N°{{ order.number }}</h1>
-                                <span class="fs-32">Date : {{ order.createdAt|date('d-m-Y') }}</span>
+                {% if orderInDelivrance is not empty %}
+                    {% for order in orderInDelivrance %}
+                        <a href="{{ path('information_order_admin',{'id':order.id}) }}"
+                           class="my-3 w-100 fs-32 order orderGreen">
+                            <div class=" p-3 centered number">
+                                {{ loop.index }}
                             </div>
-                            <span>Total : {{ order.productCount}} article{{ order.productCount>1 ?'s' }}</span>
-                        </div>
-                    </a>
-                {% endfor %}
+                            <div class="information p-3 py-4">
+                                <div>
+
+                                    <h1 class="fs-32">N°{{ order.number }}</h1>
+                                    <span class="fs-32">Date : {{ order.createdAt|date('d-m-Y') }}</span>
+                                </div>
+                                <span>Total : {{ order.productCount }} article{{ order.productCount>1 ?'s' }}</span>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <h1>Vous n'avez aucune commande en cour de livraison</h1>
+                {% endif %}
             </div>
-{% endif %}
+        {% endif %}
         {% if currentPath == '/admin/order/finish' %}
             <div class="overflow-y-scroll w-100">
                 {% for order in orderFinished %}
-                    <a href="{{ path('show_order_admin',{'id':order.id}) }}"  class="my-3 w-100 fs-32 order orderGreen">
+                    <a href="{{ path('information_order_admin',{'id':order.id}) }}" class="my-3 w-100 fs-32 order orderGreen">
                         <div class=" p-3 centered number">
                             {{ loop.index }}
                         </div>
@@ -59,7 +72,7 @@
                                 <h1 class="fs-32">N°{{ order.number }}</h1>
                                 <span class="fs-32">Date : {{ order.createdAt|date('d-m-Y') }}</span>
                             </div>
-                            <span>Total : {{ order.productCount}} article{{ order.productCount>1 ?'s' }}</span>
+                            <span>Total : {{ order.productCount }} article{{ order.productCount>1 ?'s' }}</span>
                         </div>
                     </a>
                 {% endfor %}

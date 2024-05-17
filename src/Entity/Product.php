@@ -79,6 +79,12 @@ class Product
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'product', orphanRemoval: true)]
     private Collection $comments;
 
+    /**
+     * @var Collection<int, Issu>
+     */
+    #[ORM\OneToMany(targetEntity: Issu::class, mappedBy: 'product')]
+    private Collection $issus;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -87,6 +93,7 @@ class Product
         $this->likes = new ArrayCollection();
         $this->productVariants = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->issus = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -413,6 +420,36 @@ class Product
             // set the owning side to null (unless already changed)
             if ($comment->getProduct() === $this) {
                 $comment->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Issu>
+     */
+    public function getIssus(): Collection
+    {
+        return $this->issus;
+    }
+
+    public function addIssu(Issu $issu): static
+    {
+        if (!$this->issus->contains($issu)) {
+            $this->issus->add($issu);
+            $issu->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIssu(Issu $issu): static
+    {
+        if ($this->issus->removeElement($issu)) {
+            // set the owning side to null (unless already changed)
+            if ($issu->getProduct() === $this) {
+                $issu->setProduct(null);
             }
         }
 

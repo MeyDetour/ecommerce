@@ -74,6 +74,10 @@ class Order
     #[ORM\OneToOne(mappedBy: 'command', cascade: ['persist', 'remove'])]
     private ?Action $action = null;
 
+    #[ORM\ManyToOne(inversedBy: 'orders')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?OrderList $orderList = null;
+
 
 
     public function __construct()
@@ -285,6 +289,18 @@ class Order
             $count += $item->getQuantity();
         }
         return $count;
+    }
+
+    public function getOrderList(): ?OrderList
+    {
+        return $this->orderList;
+    }
+
+    public function setOrderList(?OrderList $orderList): static
+    {
+        $this->orderList = $orderList;
+
+        return $this;
     }
 
 }

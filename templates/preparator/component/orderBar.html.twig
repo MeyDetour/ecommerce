@@ -1,14 +1,30 @@
 <div class=" containerMade">
-    <nav class="preparatorNav border-dark  pb-4  border-bottom d-flex flex-row justify-content-between">
+    <nav class="preparatorNav border-dark  pb-4  border-bottom d-flex flex-row align-items-center justify-content-between">
         <ul class="gap-5 m-0  d-flex flex-row justify-content-between">
             <li>
-                <a class="fs-32 backBtn " href="{{ redirectRef }}" ><i class="bi bi-arrow-left me-3"></i>Retour</a>
+                <a class="fs-32 backBtn " href="{{ redirectRef }}"><i class="bi bi-arrow-left me-3"></i>Retour</a>
             </li>
-        </ul>
-        <ul class="m-0">
+            {% if order is defined and order.status == 2 %}
             <li>
-                <a class="fs-32" href="#">2/12</a>
+                <a class="fs-32 backBtn " href="{{ path('delivry_order_admin',{'id':order.id}) }}">Livrer</a>
             </li>
+            {% endif %}
+        </ul>
+        {% if currentPath starts with '/admin/order/show' %}
+        <div class="progressBar" {{ stimulus_controller('progress',{'progress': order.orderList.orderDelivryCount,'goal': order.orderList.orders|length}) }}>
+            <div class="progressBar-progress" {{ stimulus_target('progress','progressBar') }}>
+            </div>
+            <div class="rond1 rond" ></div>
+            <div class="rond2 rond" {{ stimulus_target('progress','rond2') }}></div>
+        </div>
+        {% endif %}
+        <ul class="m-0">
+            {% if order is defined and order.orderList %}
+                <li>
+                    <a class="fs-32" href="#">{{ order.orderList.orderDelivryCount }}
+                        /{{ order.orderList.orders|length }}</a>
+                </li>
+            {% endif %}
         </ul>
     </nav>
 </div>

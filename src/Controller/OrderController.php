@@ -6,11 +6,13 @@ use App\Entity\Action;
 use App\Entity\Adresse;
 use App\Entity\Order;
 use App\Entity\OrderItem;
+use App\Entity\OrderList;
 use App\Entity\PayMethode;
 use App\Form\AdresseType;
 use App\Form\OrderType;
 use App\Form\PayType;
 use App\Repository\AdresseRepository;
+use App\Repository\OrderListRepository;
 use App\Repository\OrderRepository;
 use App\Repository\PayMethodeRepository;
 use App\Service\CartService;
@@ -74,7 +76,7 @@ class OrderController extends AbstractController
 
     #[Route('/order/delete/{id}', name: 'delete_order')]
     #[Route('/order/cancel/{id}', name: 'cancel_order')]
-    public function delete(Request $request,   Order $order, EntityManagerInterface $manager): Response
+    public function delete(Request $request, Order $order, EntityManagerInterface $manager): Response
     {
         $route = $request->attributes->get('_route');
         $user = $this->getUser();
@@ -84,14 +86,15 @@ class OrderController extends AbstractController
         if ($order->getAuthor() != $user) {
             return $this->redirectToRoute('app_cart');
         }
-      $this->deleteOrder($order, $manager);
+        $this->deleteOrder($order, $manager);
         if ($route === 'cancel_order') {
             return $this->redirectToRoute('profile_orders');
         }
         return $this->redirectToRoute('order_adresse_payement');
     }
 
-    private  function deleteOrder($order,  $manager){
+    private function deleteOrder($order, $manager)
+    {
         foreach ($order->getItems() as $item) {
             foreach ($item->getProductVariants() as $variant) {
                 $variant->setSell(false);
@@ -112,16 +115,15 @@ class OrderController extends AbstractController
     }
 
 
-
     #[Route('/cart/addorder/{id}', name: 'add_order_to_cart')]
-    public function addOrderToCart(Order $order ,EntityManagerInterface $manager ,  CartService $cartService): Response
+    public function addOrderToCart(Order $order, EntityManagerInterface $manager, CartService $cartService): Response
     {
-          $user = $this->getUser();
-        if (!$user  ) {
+        $user = $this->getUser();
+        if (!$user) {
             return $this->redirectToRoute('app_login');
         }
 
-        if (  $order->getAuthor() != $user) {
+        if ($order->getAuthor() != $user) {
             return $this->redirectToRoute('app_cart');
         }
         foreach ($order->getItems() as $item) {
@@ -204,13 +206,11 @@ class OrderController extends AbstractController
             $manager->flush();
 
         }
-
-
         return $this->redirectToRoute('show_order', ['id' => $order->getId()]);
     }
 
     #[Route('/order/details/{id}', name: 'payement_is_valid')]
-    public function payementIsValid(EntityManagerInterface $manager, CartService $cartService, Order $order): Response
+    public function payementIsValid(EntityManagerInterface $manager, OrderListRepository $orderListRepository, CartService $cartService, Order $order): Response
     {
 
         $user = $this->getUser();
@@ -229,11 +229,37 @@ class OrderController extends AbstractController
 
         foreach ($order->getItems() as $item) {
             $product = $item->getProduct();
-            $product->setQuantity($product->getQuantity()-1);
+            $product->setQuantity($product->getQuantity() - 1);
             $manager->persist($item);
         }
+
+        $lastOrderList = $orderListRepository->findLastCreated();
+        $currentDate = new \DateTime('now');
+        $shouldCreateNewOrderList = false;
+
+        if ($lastOrderList) {
+            $lastOrderDate = $lastOrderList->getDay();
+            $interval = $currentDate->diff($lastOrderDate);
+
+            if ($interval->days < 3 && $interval->invert == 0 && count($lastOrderList->getOrders()) <= 15) {
+                $lastOrderList->addOrder($order);
+            } else {
+                $shouldCreateNewOrderList = true;
+            }
+        } else {
+            $shouldCreateNewOrderList = true;
+        }
+      if ($shouldCreateNewOrderList) {
+            $lastOrderList = new OrderList();
+            $lastOrderList->setDay($currentDate);
+            $lastOrderList->addOrder($order);
+            $manager->persist($lastOrderList);
+        }
+
+
         $manager->flush();
-        $cartService->empty(); return $this->redirectToRoute('profile_orders_show',['id'=>$order->getId()]);
+        $cartService->empty();
+        return $this->redirectToRoute('profile_orders_show', ['id' => $order->getId()]);
 
     }
 
@@ -248,17 +274,17 @@ class OrderController extends AbstractController
         }
 
         $cartService->empty();
-        return $this->redirectToRoute('profile_orders_show',['id'=>$order->getId()]);
+        return $this->redirectToRoute('profile_orders_show', ['id' => $order->getId()]);
     }
 
     #[Route('/order/pdf/{id}', name: 'generate_pdf_order')]
-    public function generatePdf(Pdf $knpSnappyPdf , Order $order): Response
+    public function generatePdf(Pdf $knpSnappyPdf, Order $order): Response
     {
-        if (!$this->getUser() or $order->getAuthor()!=$this->getUser()){
+        if (!$this->getUser() or $order->getAuthor() != $this->getUser()) {
             return $this->redirectToRoute('profile_orders');
         }
         $html = $this->renderView('client/order/facturation.html.twig', array(
-            'order'  => $order
+            'order' => $order
         ));
         return new PdfResponse(
             $knpSnappyPdf->getOutputFromHtml($html),

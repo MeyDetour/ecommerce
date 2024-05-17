@@ -33,6 +33,55 @@
     background: black;
 }
 
+/*====================PROGRESS BAR====================*/
+.progressBar {
+    width: 50vw;
+    height: 15px;
+    flex-shrink: 0;
+    border-radius: 36px;
+    border: 2px solid #DCDCDC;
+    background: #F7F7F7;
+    position: relative;
+}
+
+.progressBar .progressBar-progress {
+    height: 136%;
+    top: -17%;
+    left: 0%;
+    width: 0%;
+    border-radius: 36px;
+    border: 2px solid #00a9e2;
+    background: #8BDEFF;
+    z-index: 2;
+    position: relative;
+    transition: all 0.5s;
+}
+
+.progressBar .rond {
+
+    width: 30px;
+    height: 30px;
+
+    z-index: 3;
+    border-radius: 36px;
+    top: -81%;
+    position: absolute;
+}
+
+.progressBar .rond1 {
+    left: -2%;
+    border: 2px solid #0FA4D8;
+    background: #8BDEFF;
+}
+
+.progressBar .rond2 {
+    right: -2%;
+    border: 2px solid #DCDCDC;
+    background: #F7F7F7;
+
+    transition: all 1.5s;
+}
+
 /*====================NAV====================*/
 .preparatorNav ul {
     list-style: none;
@@ -55,14 +104,26 @@
     background: #8BDEFF;
 }
 
+.blueBtn:active {
+    background: #75c9ea;
+}
+
 .backBtn {
 
     padding: 10px 15px;
 
     border-radius: 10px;
     background: #DEDEDE;
+}.backBtn:active {
+
+    background: #d9d9d9;
 }
-#buttonContainer button{
+
+#buttonContainer a {
+    text-decoration: none;
+    color: black;
+    text-align: center;
+    align-content: center;
     border-radius: 10px;
     border: 0;
     padding: 0;
@@ -72,12 +133,20 @@
     font-size: 25px;
 
 }
-.btnRouge {
-    background: #FF9396;
-}.btnGrey {
+
+
+.btnGrey {
     background: #C6C7D7;
-}.btnGreen {
+}
+.btnGrey:active {
+    background: #a5a6bd;
+}
+
+.btnGreen {
     background: #8BF979;
+}
+.btnGreen:active {
+    background: #79e567;
 }
 
 /*====================ORDER LIST====================*/
@@ -96,12 +165,20 @@
     background: #F98179;
 }
 
+.orderRed:active .information {
+    background: #ea746c;
+}
+
 .orderGreen .number {
     background: #6CE059;
 }
 
 .orderGreen .information {
     background: #8BF979;
+}
+
+.orderGreen:active .information {
+    background: #79e867;
 }
 
 .order .number {
@@ -148,9 +225,11 @@
     font-weight: 700;
     line-height: 120.266%; /* 48.107px */
 }
-#adminShowOrderToDelivryPage{
+
+#adminShowOrderToDelivryPage {
     height: 56vh;
 }
+
 #buttonContainer {
     display: flex;
     padding: 26px 0px;
@@ -161,7 +240,53 @@
     flex-shrink: 0;
     border-top: 4px solid #979797;
     background: #eddede;
-position: absolute;
+    position: absolute;
     bottom: 0%;
     left: 0%;
 }
+
+.refBlue {
+    border-radius: 10px;
+    background: #8BDEFF;
+    text-align: center;
+    align-content: center;
+
+}
+
+/*====================PROBLEME PAGE====================*/
+
+#problemePage h1 {
+    color: #B40015;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120.266%; /* 76.97px */
+}
+
+#problemePage .redBox {
+    display: block;
+    border-radius: 10px;
+    background: #FF9396;
+    text-align: center;
+    align-content: center;
+    font-weight: normal;
+    width: fit-content;
+    padding: 20px 30px;
+
+}
+
+#problemePage .btnRouge:active {
+    background: #e77f81;
+}
+
+#problemePage .product {
+    text-align: center;
+    align-content: center;
+    border-radius: 10px;
+    background: #FBEB64;
+    background: color(display-p3 0.975 0.925 0.4753);
+    width: 30vw;
+    padding: 20px 30px;
+}
+#problemePage .product:active {
+    background: #eada53;}
